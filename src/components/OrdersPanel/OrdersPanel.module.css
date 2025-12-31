@@ -1,0 +1,84 @@
+.panelContainer {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 2rem;
+    color: var(--primary-red);
+}
+
+.groupsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Espacio entre los grupos de fechas */
+}
+
+.dateGroup {
+    animation: fadeIn 0.3s ease-in;
+}
+
+.dateHeader {
+    background-color: #fce7f3; /* Un rosa/gris muy suave */
+    color: #9d174d;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    border-left: 4px solid #db2777;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.table th, .table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.9rem;
+}
+
+.total {
+    color: #10b981; 
+    font-weight: bold;
+}
+
+.badge {
+    background-color: #d1fae5;
+    color: #065f46;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.empty {
+    text-align: center;
+    color: #6b7280;
+    font-style: italic;
+    margin-top: 2rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

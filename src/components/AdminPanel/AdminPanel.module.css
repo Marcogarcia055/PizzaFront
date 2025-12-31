@@ -1,0 +1,230 @@
+/* AdminPanel.module.css */
+
+.adminContainer {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #1f2937;
+}
+
+/* --- HEADER --- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* Alinea abajo para que buscador y botón cuadren */
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.titleSection h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    color: #111827;
+}
+
+.badge {
+    background-color: #f3f4f6;
+    color: #6b7280;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+/* --- CONTROLES (Buscador + Botón) --- */
+.controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.searchWrapper {
+    position: relative;
+    width: 300px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 10px 10px 10px 36px; /* Espacio para el icono */
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.searchInput:focus {
+    border-color: var(--primary-orange, #f97316);
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+.createBtn {
+    background-color: #111827; /* Negro suave elegante */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.createBtn:hover {
+    background-color: #374151;
+    transform: translateY(-1px);
+}
+
+/* --- TABLA --- */
+.tableWrapper {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    overflow: hidden; /* Para las esquinas redondeadas */
+    border: 1px solid #f3f4f6;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    background-color: #f9fafb;
+    text-align: left;
+    padding: 1rem 1.5rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    font-weight: 600;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: middle;
+}
+
+/* Celda de Producto (Imagen + Info) */
+.productCell {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.thumb {
+    width: 148px;
+    height: 148px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid #e5e7eb;
+}
+
+.productInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.productName {
+    font-weight: 600;
+    color: #111827;
+}
+
+.productDesc {
+    font-size: 0.85rem;
+    color: #9ca3af;
+}
+
+.priceCell {
+    font-family: 'Courier New', monospace; /* Estilo numérico */
+    font-weight: 700;
+    color: #111827;
+}
+
+/* Badges de estado */
+.statusBadge {
+    background-color: #d1fae5;
+    color: #065f46;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Acciones */
+.centerText {
+    text-align: center;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.actionBtn {
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.editBtn {
+    background-color: #eff6ff;
+    color: #3b82f6;
+    font-size: 1.75rem;
+}
+
+.editBtn:hover {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.deleteBtn {
+    background-color: #fef2f2;
+    color: #ef4444;
+    font-size: 1.75rem;
+}
+
+.deleteBtn:hover {
+    background-color: #ef4444;
+    color: white;
+}
+
+/* Estados Vacío / Carga */
+.loading, .emptyState {
+    text-align: center;
+    padding: 3rem;
+    color: #9ca3af;
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}

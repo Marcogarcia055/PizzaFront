@@ -1,0 +1,91 @@
+.cartContainer {
+  background: var(--white);
+  padding: 1.1rem;
+  border-radius: 12px;
+  height: fit-content;
+}
+
+.cartContainer h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+}
+
+.itemsList {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.item {
+  color: var(--text-dark);
+  font-size: 0.95rem;
+}
+
+.pricing {
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+}
+
+/* 🔹 Nueva clase para el total */
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 1.7rem;   /* letras más grandes */
+  font-weight: 700;    /* más gruesas */
+  color: #d60400;      /* color destacado */
+}
+
+.checkoutBtn {
+  width: 100%;
+  background-color: var(--primary-orange);
+  color: white;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* ... tus estilos existentes ... */
+
+/* 🔹 Estilo para el botón de borrar */
+.removeBtn {
+  background: none;
+  border: none;
+  color: #ef4444; /* Rojo */
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  margin-top: 4px;
+}
+
+.removeBtn:hover {
+  color: #b91c1c;
+}
+
+/* 🔹 Estilo para el input del nombre */
+.nameInput {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.nameInput:focus {
+  outline: 2px solid var(--primary-orange);
+  border-color: transparent;
+}

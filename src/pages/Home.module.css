@@ -1,0 +1,65 @@
+.mainContainer {
+    margin: 0 auto;
+    padding-bottom: 2rem;
+}
+
+.gridContent {
+    display: grid;
+    /* Columna izq (250px) - Central (flexible) - Columna der (300px) */
+    grid-template-columns: 330px 1fr 300px;
+    gap: 2rem;
+    padding: 1rem;
+    align-items: start;
+}
+
+/* Estilos para el Sidebar de Categorías inline */
+.sidebar {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.sidebar h3 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.categoryList {
+    list-style: none;
+}
+
+.categoryList li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f3f3f3;
+    cursor: pointer;
+    color: var(--text-dark);
+    transition: color 0.2s;
+}
+
+.categoryList li:hover {
+    color: var(--primary-orange);
+}
+
+.categoryList li:last-child {
+    border-bottom: none;
+}
+
+/* Grid de Tarjetas de Pizza */
+.pizzasSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* evita que se desborde */
+}
+
+.pizzasGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* grid responsivo */
+  gap: 1rem;
+  max-height: 600px;       /* 🔹 altura fija */
+  overflow-y: auto;        /* 🔹 scroll vertical */
+  padding-right: 0.5rem;   /* espacio para el scrollbar */
+}

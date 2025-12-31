@@ -1,0 +1,30 @@
+:root {
+  --primary-red: #5C201F;
+  --primary-orange: #D96C2C; /* Color de los botones */
+  --bg-color: #F3F4F6;
+  --text-dark: #1F2937;
+  --text-light: #6B7280;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif; /* Asegúrate de tener una fuente sans-serif limpia */
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}

@@ -1,0 +1,61 @@
+.card {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 0.8rem;              /* menos espacio interno */
+  text-align: center;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 200px;             /* 🔹 tarjeta más angosta */
+}
+
+.imageContainer img {
+  width: 130px;                 /* imagen más pequeña */
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.8rem;
+}
+
+.card h3 {
+  font-size: 1rem;              /* título más pequeño */
+  margin-bottom: 0.4rem;
+}
+
+.desc {
+  font-size: 0.75rem;           /* descripción compacta */
+  color: var(--text-light);
+  margin-bottom: 0.6rem;
+  min-height: 30px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: 0.8rem;
+  font-size: 0.8rem;            /* estrellas más pequeñas */
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.price {
+  font-weight: 600;
+  font-size: 1rem;              /* precio más compacto */
+}
+
+.addBtn {
+  background-color: var(--primary-orange);
+  color: white;
+  border-radius: 16px;
+  padding: 4px 12px;            /* botón más pequeño */
+  font-weight: bold;
+  font-size: 0.9rem;
+}
