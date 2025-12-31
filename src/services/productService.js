@@ -8,6 +8,7 @@ export const getAllProductos = async () => {
     desc: prod.descripcion || "Delicious ingredients",
     price: prod.precio,
     image: prod.imagen || "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=500&q=60",
+    category: prod.categoria || "General",
     activo: prod.activo // Importante si manejas estado lógico
   }));
 };

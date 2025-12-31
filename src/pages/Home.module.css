@@ -61,5 +61,5 @@
   gap: 1rem;
   max-height: 600px;       /* 🔹 altura fija */
   overflow-y: auto;        /* 🔹 scroll vertical */
-  padding-right: 0.5rem;   /* espacio para el scrollbar */
+  padding-right: 0.5rem;   /*gio espacio para el scrollbar */
 }

@@ -4,19 +4,18 @@ import Banner from '../components/Banner/Banner';
 import PizzaCard from '../components/PizzaCard/PizzaCard';
 import CartSummary from '../components/CartSummary/CartSummary';
 import AdminPanel from '../components/AdminPanel/AdminPanel';
-import OrdersPanel from '../components/OrdersPanel/OrdersPanel'; // <--- IMPORTAR
-import { FaCaretRight } from 'react-icons/fa';
+import OrdersPanel from '../components/OrdersPanel/OrdersPanel';
+import { FaCaretRight, FaUtensils } from 'react-icons/fa';
 import styles from './Home.module.css';
 import { getAllProductos } from '../services/productService';
-import { createPedido } from '../services/orderService';
+import { createPedido } from '../services/orderService'; // 1. Aquí se usa createPedido
 
 const Home = () => {
   const [pizzas, setPizzas] = useState([]);
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
-  
-  // Ahora currentView puede ser: 'menu', 'admin' o 'orders'
   const [currentView, setCurrentView] = useState('menu'); 
+  const [selectedCategory, setSelectedCategory] = useState('Todas');
 
   useEffect(() => {
     if (currentView === 'menu') {
@@ -25,20 +24,20 @@ const Home = () => {
   }, [currentView]);
 
   const fetchProductos = async () => {
-    // ... (Tu código de fetchProductos igual que antes) ...
     setLoading(true);
     try {
       const data = await getAllProductos(); 
       setPizzas(data);
     } catch (error) {
-      console.error("No se pudo cargar el menú:", error);
+      console.error("Error al cargar menú:", error);
     } finally {
       setLoading(false);
     }
   };
 
+  // --- LÓGICA DEL CARRITO ---
+
   const addToCart = (pizza) => {
-    // ... (Tu código de addToCart igual que antes) ...
     setCart(prevCart => {
       const existing = prevCart.find(item => item.id === pizza.id);
       if (existing) {
@@ -50,21 +49,22 @@ const Home = () => {
     });
   };
 
+  // 2. Corregido: Usamos 'productToRemove' (antes 'item') para filtrar
   const removeFromCart = (productToRemove) => {
-    // ... (Tu código de removeFromCart igual que antes) ...
     setCart((prevCart) => {
         return prevCart.filter(item => item.id !== productToRemove.id);
     });
   };
 
+  // 3. Corregido: Usamos 'clientName' (antes 'name') y llamamos a 'createPedido'
   const handleCheckout = async (clientName) => {
-    // ... (Tu código de checkout igual que antes) ...
     if (cart.length === 0) return alert("Tu carrito está vacío.");
+
     const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-    const totalConImpuesto = subtotal * 1.16;
+    const totalConImpuesto = subtotal * 1.16; 
 
     const pedidoDto = {
-        cliente: clientName, 
+        cliente: clientName, // Usamos la variable clientName
         total: totalConImpuesto,
         detalles: cart.map(item => ({
             idProducto: item.id,
@@ -74,7 +74,7 @@ const Home = () => {
     };
 
     try {
-        await createPedido(pedidoDto);
+        await createPedido(pedidoDto); // Usamos la función importada
         alert(`¡Pedido creado exitosamente para ${clientName}! 🍕`);
         setCart([]); 
     } catch (error) {
@@ -83,44 +83,67 @@ const Home = () => {
     }
   };
 
-  const categories = ["Classic Pizzas", "Specialty Pizzas", "Drinks"];
+  // --- LÓGICA DE CATEGORÍAS ---
 
-  // --- FUNCIÓN HELPER PARA RENDERIZAR EL CONTENIDO ---
+  const categoriesList = ["Todas", "Pizzas", "Hamburguesas", "Bebidas", "Postres"];
+
+  const filteredProducts = selectedCategory === 'Todas' 
+      ? pizzas 
+      : pizzas.filter(p => p.category === selectedCategory);
+
   const renderContent = () => {
     switch (currentView) {
-        case 'admin':
-            return <AdminPanel />;
-        case 'orders':
-            return <OrdersPanel />; // <--- NUEVA VISTA
+        case 'admin': return <AdminPanel />;
+        case 'orders': return <OrdersPanel />;
         case 'menu':
         default:
             return (
                 <div className={styles.mainContainer}>
                     <Banner />
                     <div className={styles.gridContent}>
+                        
+                        {/* SIDEBAR */}
                         <aside className={styles.sidebar}>
-                            <h3>Categories</h3>
+                            <h3>Categorías</h3>
                             <ul className={styles.categoryList}>
-                                {categories.map((cat, index) => (
-                                    <li key={index}>
-                                        <FaCaretRight color="#9CA3AF" />
+                                {categoriesList.map((cat, index) => (
+                                    <li 
+                                        key={index} 
+                                        onClick={() => setSelectedCategory(cat)}
+                                        style={{
+                                            cursor: 'pointer',
+                                            color: selectedCategory === cat ? 'var(--primary-orange)' : 'inherit',
+                                            fontWeight: selectedCategory === cat ? 'bold' : 'normal'
+                                        }}
+                                    >
+                                        <FaCaretRight color={selectedCategory === cat ? 'var(--primary-orange)' : '#9CA3AF'} />
                                         <span>{cat}</span>
                                     </li>
                                 ))}
                             </ul>
                         </aside>
+
+                        {/* PRODUCTOS */}
                         <section className={styles.pizzasSection}>
-                            <h2>Productos</h2>
+                            <h2>{selectedCategory === 'Todas' ? 'Nuestro Menú' : selectedCategory}</h2>
+                            
                             {loading ? (
-                                <p>Cargando deliciosas pizzas...</p>
+                                <p>Cargando...</p>
+                            ) : filteredProducts.length === 0 ? (
+                                <div style={{textAlign: 'center', padding: '2rem', color: '#666'}}>
+                                    <FaUtensils size={30} style={{marginBottom: '10px'}}/>
+                                    <p>No hay productos en esta categoría aún.</p>
+                                </div>
                             ) : (
                                 <div className={styles.pizzasGrid}>
-                                    {pizzas.map(pizza => (
+                                    {filteredProducts.map(pizza => (
                                         <PizzaCard key={pizza.id} data={pizza} onAdd={addToCart} />
                                     ))}
                                 </div>
                             )}
                         </section>
+
+                        {/* CARRITO */}
                         <aside className={styles.cartSidebar}>
                             <CartSummary 
                                 cartItems={cart} 
@@ -139,9 +162,8 @@ const Home = () => {
       <Navbar 
         onGoHome={() => setCurrentView('menu')} 
         onGoAdmin={() => setCurrentView('admin')} 
-        onGoOrders={() => setCurrentView('orders')} // <--- PASAMOS LA NUEVA FUNCIÓN
+        onGoOrders={() => setCurrentView('orders')} 
       /> 
-      
       {renderContent()}
     </>
   );

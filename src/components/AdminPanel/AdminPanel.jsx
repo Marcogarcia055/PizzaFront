@@ -1,9 +1,8 @@
-// Ubicación: src/components/AdminPanel/AdminPanel.jsx
 import React, { useState, useEffect } from 'react';
 import styles from './AdminPanel.module.css';
 import { getAllProductos, deleteProduct } from '../../services/productService';
 import AddProductModal from '../AddProductModal/AddProductModal';
-import { FaEdit, FaTrash, FaPlus, FaSearch, FaBoxOpen } from 'react-icons/fa'; // Iconos nuevos
+import { FaEdit, FaTrash, FaPlus, FaSearch, FaBoxOpen, FaTag } from 'react-icons/fa'; // Agregué FaTag
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -11,10 +10,10 @@ const MySwal = withReactContent(Swal);
 
 const AdminPanel = () => {
     const [products, setProducts] = useState([]);
-    const [searchTerm, setSearchTerm] = useState(""); // Estado para el buscador
+    const [searchTerm, setSearchTerm] = useState(""); 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null); 
-    const [loading, setLoading] = useState(true); // Estado de carga
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         loadProducts();
@@ -38,11 +37,11 @@ const AdminPanel = () => {
             text: `Se eliminará "${name}" permanentemente.`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#ef4444', // Rojo alerta
-            cancelButtonColor: '#6b7280', // Gris cancelar
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#6b7280',
             confirmButtonText: 'Sí, eliminar',
             cancelButtonText: 'Cancelar',
-            reverseButtons: true // Estilo más moderno
+            reverseButtons: true
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
@@ -69,12 +68,13 @@ const AdminPanel = () => {
 
     // Lógica de filtrado
     const filteredProducts = products.filter(prod => 
-        prod.name.toLowerCase().includes(searchTerm.toLowerCase())
+        prod.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        prod.category?.toLowerCase().includes(searchTerm.toLowerCase()) // También busca por categoría
     );
 
     return (
         <div className={styles.adminContainer}>
-            {/* Header con Buscador y Botón */}
+            {/* --- HEADER --- */}
             <div className={styles.header}>
                 <div className={styles.titleSection}>
                     <h1>Inventario</h1>
@@ -86,7 +86,7 @@ const AdminPanel = () => {
                         <FaSearch className={styles.searchIcon} />
                         <input 
                             type="text" 
-                            placeholder="Buscar pizza..." 
+                            placeholder="Buscar pizza o categoría..." 
                             className={styles.searchInput}
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
@@ -98,22 +98,24 @@ const AdminPanel = () => {
                 </div>
             </div>
 
-            {/* Tabla de Productos */}
+            {/* --- TABLA --- */}
             <div className={styles.tableWrapper}>
                 <table className={styles.table}>
                     <thead>
                         <tr>
                             <th>Producto</th>
+                            <th>Categoría</th>
                             <th>Precio</th>
+                            <th>Estado</th>
                             <th className={styles.centerText}>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         {loading ? (
-                            <tr><td colSpan="4" className={styles.loading}>Cargando inventario...</td></tr>
+                            <tr><td colSpan="5" className={styles.loading}>Cargando inventario...</td></tr>
                         ) : filteredProducts.length === 0 ? (
                             <tr>
-                                <td colSpan="4" className={styles.emptyState}>
+                                <td colSpan="5" className={styles.emptyState}>
                                     <FaBoxOpen size={40} />
                                     <p>No se encontraron productos</p>
                                 </td>
@@ -130,7 +132,28 @@ const AdminPanel = () => {
                                             </div>
                                         </div>
                                     </td>
+                                    
+                                    {/* 🔹 Columna de Categoría */}
+                                    <td>
+                                        <span style={{
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '5px',
+                                            backgroundColor: '#eef2ff',
+                                            color: '#6366f1',
+                                            padding: '4px 8px',
+                                            borderRadius: '6px',
+                                            fontSize: '0.85rem',
+                                            fontWeight: '600'
+                                        }}>
+                                            <FaTag size={10} /> {prod.category}
+                                        </span>
+                                    </td>
+
                                     <td className={styles.priceCell}>${prod.price.toFixed(2)}</td>
+                                    <td>
+                                        <span className={styles.statusBadge}>Activo</span>
+                                    </td>
                                     <td>
                                         <div className={styles.actions}>
                                             <button 
@@ -154,6 +177,7 @@ const AdminPanel = () => {
                 </table>
             </div>
 
+            {/* --- MODAL --- */}
             {isModalOpen && (
                 <AddProductModal 
                     key={editingProduct ? editingProduct.id : 'new'}

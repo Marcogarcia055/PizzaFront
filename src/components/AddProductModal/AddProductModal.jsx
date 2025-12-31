@@ -8,14 +8,19 @@ import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(Swal);
 
 const AddProductModal = ({ onClose, onProductSaved, productToEdit }) => {
+    // 1. Inicializamos 'categoria' en el estado
     const [formData, setFormData] = useState({
         nombre: productToEdit?.name || '',
         precio: productToEdit?.price || '',
         descripcion: productToEdit?.desc || '',
-        imagen: productToEdit?.image || ''
+        imagen: productToEdit?.image || '',
+        categoria: productToEdit?.category || 'Pizzas Clásicas' // Valor por defecto
     });
 
     const [file, setFile] = useState(null);
+
+    // Lista de categorías disponibles (deben coincidir con las del Sidebar en Home)
+    const categorias = ["Pizzas", "Hamburguesas", "Bebidas", "Postres"];
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,6 +40,7 @@ const AddProductModal = ({ onClose, onProductSaved, productToEdit }) => {
                 imageUrl = uploaded.url; 
             }
 
+            // 2. Incluimos la categoría en el payload
             const payload = {
                 ...formData,
                 precio: parseFloat(formData.precio),
@@ -83,6 +89,29 @@ const AddProductModal = ({ onClose, onProductSaved, productToEdit }) => {
                         <label>Nombre</label>
                         <input name="nombre" value={formData.nombre} required onChange={handleChange} />
                     </div>
+                    
+                    {/* 3. Selector de Categoría */}
+                    <div className={styles.formGroup}>
+                        <label>Categoría</label>
+                        <select 
+                            name="categoria" 
+                            value={formData.categoria} 
+                            onChange={handleChange}
+                            style={{
+                                width: '100%', 
+                                padding: '8px', 
+                                borderRadius: '4px', 
+                                border: '1px solid #ddd',
+                                fontSize: '0.9rem',
+                                backgroundColor: 'white'
+                            }}
+                        >
+                            {categorias.map(cat => (
+                                <option key={cat} value={cat}>{cat}</option>
+                            ))}
+                        </select>
+                    </div>
+
                     <div className={styles.formGroup}>
                         <label>Precio</label>
                         <input type="number" step="0.01" name="precio" value={formData.precio} required onChange={handleChange} />
@@ -94,8 +123,8 @@ const AddProductModal = ({ onClose, onProductSaved, productToEdit }) => {
                     <div className={styles.formGroup}>
                         <label>Imagen</label>
                         <input type="file" accept="image/*" onChange={handleFileChange} />
-                        <small>URL actual:</small>
-                        <input name="imagen" value={formData.imagen} onChange={handleChange} />
+                        <small style={{display: 'block', marginTop: '5px'}}>URL actual:</small>
+                        <input name="imagen" value={formData.imagen} onChange={handleChange} placeholder="https://..." />
                     </div>
                     
                     <div className={styles.actions}>
